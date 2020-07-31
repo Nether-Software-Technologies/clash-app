@@ -8,7 +8,7 @@ A third-party app for League of Legends that provides information to players on 
 
 ## Contributing
 
-Please [email](mailto:nethersoftwaretechnologies@gmail.com) for details on our code of conduct, and the process for submitting pull requests to us.
+Please email [nethersoftwaretechnologies@gmail.com](mailto:nethersoftwaretechnologies@gmail.com) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
