@@ -5,6 +5,8 @@ A third-party app for League of Legends that provides information to players on 
 ## Built With
 
 * [Boost C++ Libraries](https://www.boost.org/) - Description
+* [RapidJSON](https://rapidjson.org/) - Description
+* [cURL](https://curl.haxx.se/) - Description
 
 ## Contributing
 
