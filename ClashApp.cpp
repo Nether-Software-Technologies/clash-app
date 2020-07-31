@@ -57,5 +57,8 @@ TEST_CASE("APIGrab Champion Test") {
     CHECK(kled.getChampDifficulty() == kledDifficulty);
 
     std::cout << kled << std::endl;
-    
+}
+
+TEST_CASE("DAB") {
+
 }

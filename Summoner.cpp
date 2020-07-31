@@ -8,7 +8,7 @@ Summoner::Summoner() {
     ID = "_Ify1e4i75PjTrNTY_7MzuW25RgcSLweXYF6Vj4ZCBz9NUc";
     accountID = "0Esh1QsHwIJpYov6cZLO1KkCEoMQggSwpOK5eyhVMih7vvU";
     puuid = "Wr3-CKCas-_kOffXfBrRGR79AIsdmIKIHqiBAY-M_PSk2gI5EqMMCQY2xubOuMqW5LeO1tq6APOOcw";
-    name = "DrWegener";
+    name = "DrWegener"; //andyW
     profileIconID = 4068;
     revisionDate = 1587944261;
     summonerLevel = 116;

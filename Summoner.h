@@ -20,8 +20,8 @@ private:
 public:
     Summoner();
     Summoner(std::string initAccount, int initProfileIconID, long initRevisionDate, std::string initName,
-        std::string initID, std::string initPuuid, long initSummonerLevel) : accountID(initAccount), profileIconID(initProfileIconID),
-        revisionDate(initRevisionDate), name(initName), ID(initID), puuid(initPuuid), summonerLevel(initSummonerLevel) {};
+    std::string initID, std::string initPuuid, long initSummonerLevel) : accountID(initAccount), profileIconID(initProfileIconID),
+    revisionDate(initRevisionDate), name(initName), ID(initID), puuid(initPuuid), summonerLevel(initSummonerLevel) {};
     std::string getEncryptedSummonerID();
     std::string getEncryptedAccountID();
     std::string getPuuid();

@@ -103,6 +103,7 @@ Champion APIHandler::getChampionDetailed(const std::string& champion) {
     for (SizeType i = 0; i < tags.Size(); i++) {
         cTags.push_back(tags[i].GetString());
     }
+    //JSONs are nested
     std::string cBlurb = JSON["data"][champion.c_str()]["blurb"].GetString();
     std::string cName = JSON["data"][champion.c_str()]["name"].GetString();
     std::string cTitle = JSON["data"][champion.c_str()]["title"].GetString();

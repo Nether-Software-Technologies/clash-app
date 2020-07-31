@@ -83,7 +83,7 @@ public:
     std::vector<std::string> getChampTags() const;
 
     /**
-     * @brief Retrieves the champion difficulty.
+     * @brief Retrieves the champion difficulty. aaaa
      */
     int getChampDifficulty() const;
 
