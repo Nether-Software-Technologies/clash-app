@@ -37,4 +37,9 @@
 *.vcxproj.filters
 *.vcxproj.user
 .vs/
+tasks.json
+launch.json
+c_cpp_properties.json
 
+# Mac
+.DS_Store
