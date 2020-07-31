@@ -28,6 +28,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Hopefully the code isn't broken next update
-* Lot's of late nights
+* Lots of late nights
 * Don't feed
 
