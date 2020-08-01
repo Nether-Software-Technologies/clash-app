@@ -40,6 +40,9 @@
 tasks.json
 launch.json
 c_cpp_properties.json
+settings.json
+Clash.app
 
 # Mac
 .DS_Store
+*.dSYM
