@@ -7,8 +7,11 @@
 #include "APIHandler.h"
 #include "Champion.h"
 #include <iostream>
+
 using namespace API;
 using namespace rapidjson;
+
+
 
 //CLASS DEFINITION
 std::size_t APIHandler::WriteCallback(const char* in, std::size_t size, std::size_t num, std::string* out) {
@@ -16,99 +19,107 @@ std::size_t APIHandler::WriteCallback(const char* in, std::size_t size, std::siz
     out->append(in, totalBytes);
     return totalBytes;
 }
-std::string APIHandler::callAPI(std::string url) {
+JSON APIHandler::callAPI(std::string url) {
     CURL* curl;
     CURLcode res;
     std::string readBuffer = "";
+    JSON toReturn;
     curl = curl_easy_init();
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcurl-agent/1.0");
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void*)&readBuffer);
-        res = curl_easy_perform(curl);
+        res = curl_easy_perform(curl);           
         curl_easy_cleanup(curl);
     }
-    //std::cout << res << std::endl; //test cout for error codes
-    return readBuffer;
+    //std::cout << response_code << std::endl; //test cout for error codes //deprecated :(
+	toReturn.Parse(readBuffer.c_str());
+    if (toReturn.IsObject() && (!toReturn.HasParseError())) {
+        if (toReturn.HasMember("status")) {
+		    errorHandler(toReturn);
+	    }
+	}
+	return toReturn;
 }
+
+std::string stringify(JSON& json) {
+	StringBuffer buffer;
+	PrettyWriter<StringBuffer> writer(buffer);
+	json.Accept(writer);
+	return buffer.GetString();
+}
+
+void APIHandler::errorHandler(JSON& errorJSON) {
+    throw std::runtime_error(errorJSON["status"]["message"].GetString() + static_cast<std::string>(", Error code: ") + std::to_string(errorJSON["status"]["status_code"].GetInt()));
+}
+
 Summoner APIHandler::getSummoner(const std::string& summoner) {
 	std::string url_result = API_BASE_NA + API_SUMMONER_NAME + summoner + API_KEY;
-    std::string json = callAPI(url_result);
-    std::cout << json << std::endl;
+    JSON notJSON = callAPI(url_result);
     return Summoner();
 }
 void APIHandler::getChampionMastery(const std::string& encryptedSummonerID) {
     std::string url_result = API_BASE_NA + API_MASTERY_SUMMONER + encryptedSummonerID + API_KEY;
-    std::string json = callAPI(url_result);
-    std::cout << json << std::endl;
+    JSON notJSON = callAPI(url_result);
 }
 void APIHandler::getChampionMasteryByChampion(const std::string& encryptedSummonerID, const long& championID) {
     std::string url_result = API_BASE_NA + API_MASTERY_SUMMONER + encryptedSummonerID + BY_CHAMPION + std::to_string(championID) + API_KEY;
-    std::string json = callAPI(url_result);
-    std::cout << json << std::endl;
+    JSON notJSON = callAPI(url_result);
 }
 void APIHandler::getMasteryScore(const std::string& encryptedSummonerID) {
     std::string url_result = API_BASE_NA + API_MASTERY_SCORE + encryptedSummonerID + API_KEY;
-    std::string json = callAPI(url_result);
-    std::cout << json << std::endl;
+    JSON notJSON = callAPI(url_result);
 }
 void APIHandler::getChampionRotation() {
     std::string url_result = API_BASE_NA + CHAMPION_ROTATION + API_KEY;
-    std::string json = callAPI(url_result);
-    std::cout << json << std::endl;
+    JSON notJSON = callAPI(url_result);
 }
 void APIHandler::getClashBySummoner(const std::string& encryptedSummonerID) {
     std::string url_result = API_BASE_NA + CLASH_SUMMONER + encryptedSummonerID + API_KEY;
-    std::string json = callAPI(url_result);
-    std::cout << json << std::endl;
+    JSON notJSON = callAPI(url_result);
 }
 void APIHandler::getClashByTeam(const std::string& teamID) {
     std::string url_result = API_BASE_NA + CLASH_TEAM + teamID + API_KEY;
-    std::string json = callAPI(url_result);
-    std::cout << json << std::endl;
+    JSON notJSON = callAPI(url_result);
 }
 void APIHandler::getTournamentByTeam(const std::string& teamID) {
     std::string url_result = API_BASE_NA + CLASH_TOURNAMENT + teamID + API_KEY;
-    std::string json = callAPI(url_result);
-    std::cout << json << std::endl;
+    JSON notJSON = callAPI(url_result);
 }
 void APIHandler::getTournamentList() {
     std::string url_result = API_BASE_NA + CLASH_TOURNAMENT_LIST + API_KEY;
-    std::string json = callAPI(url_result);
-    std::cout << json << std::endl;
+    JSON notJSON = callAPI(url_result);
 }
 std::string APIHandler::getServerStatus() {
     std::string url_result = API_BASE_NA + SERVER_UPTIME + API_KEY;
-    std::string json = callAPI(url_result);
-    return json;
+    JSON notJSON = callAPI(url_result);
+    return stringify(notJSON);
 }
-Document APIHandler::getChampions() {
+JSON APIHandler::getChampions() {
     std::string url_result = DDRAGON_CHAMPION_REQUEST + "champion.json";
-    std::string jString = callAPI(url_result);
-    Document toJSON;
-    toJSON.Parse(jString.c_str());
-    if (toJSON.HasParseError()) {
-        throw std::logic_error("Error parsing JSON!");
+    JSON notJSON = callAPI(url_result);
+    if (notJSON.HasParseError()) {
+        throw std::logic_error("Error parsing notJSON!");
     }
-    return toJSON;
+    return notJSON;
 }
 Champion APIHandler::getChampionDetailed(const std::string& champion) {
-    Document JSON = getChampions();
-    if (!JSON["data"].HasMember(champion.c_str())) {
+    JSON notJSON = getChampions();
+    if (!notJSON["data"].HasMember(champion.c_str())) {
         throw std::invalid_argument("Champion doesn't exist!");
     };
-    const Value& tags = JSON["data"][champion.c_str()]["tags"];
+    const Value& tags = notJSON["data"][champion.c_str()]["tags"];
     std::vector<std::string> cTags;
     for (SizeType i = 0; i < tags.Size(); i++) {
         cTags.push_back(tags[i].GetString());
     }
-    //JSONs are nested
-    std::string cBlurb = JSON["data"][champion.c_str()]["blurb"].GetString();
-    std::string cName = JSON["data"][champion.c_str()]["name"].GetString();
-    std::string cTitle = JSON["data"][champion.c_str()]["title"].GetString();
-    int cDifficulty = JSON["data"][champion.c_str()]["info"]["difficulty"].GetInt();
-    long cID = std::stol(JSON["data"][champion.c_str()]["key"].GetString());
+    //notJSONs are nested
+    std::string cBlurb = notJSON["data"][champion.c_str()]["blurb"].GetString();
+    std::string cName = notJSON["data"][champion.c_str()]["name"].GetString();
+    std::string cTitle = notJSON["data"][champion.c_str()]["title"].GetString();
+    int cDifficulty = notJSON["data"][champion.c_str()]["info"]["difficulty"].GetInt();
+    long cID = std::stol(notJSON["data"][champion.c_str()]["key"].GetString());
     Champion champ(cID, cName, cTags, cTitle, cBlurb, cDifficulty);
     return champ;
 }

@@ -59,6 +59,17 @@ TEST_CASE("APIGrab Champion Test") {
     std::cout << kled << std::endl;
 }
 
-TEST_CASE("DAB") {
-
+TEST_CASE("APIHandler test") {
+    while (true) {
+		APIHandler handler;
+        try {
+            handler.getChampionRotation();
+        } 
+        catch(std::runtime_error& e) {
+            std::cout << e.what();
+            CHECK(true == true);
+            break;
+		}
+	}
+    std::cout << "\nPOGGERS\n"; //andySleeper();
 }

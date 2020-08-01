@@ -18,7 +18,24 @@ private:
     std::string puuid;
     long summonerLevel;
 public:
+
+    /**
+     * @brief Default constructor. Creates a %Summoner().
+     * 
+     */
     Summoner();
+
+    /**
+     * @brief Constructor with all variables initalized. Called from callAPI().
+     * @param accountID Encrypted account ID has a max length of 56 characters.
+     * @param profileIconID ID of the summoner icon associated with the summoner.
+     * @param revisionDate Date summoner was last modified specified as epoch milliseconds.
+     * @param name %Summoner name.
+     * @param ID Encrypted summoner ID. Max length 63 characters.
+     * @param puuid Encrypted PUUID. Exact length of 78 characters.
+     * @param summonerLevel %Summoner level associated with the summoner.
+     * 
+     */
     Summoner(std::string initAccount, int initProfileIconID, long initRevisionDate, std::string initName,
     std::string initID, std::string initPuuid, long initSummonerLevel) : accountID(initAccount), profileIconID(initProfileIconID),
     revisionDate(initRevisionDate), name(initName), ID(initID), puuid(initPuuid), summonerLevel(initSummonerLevel) {};

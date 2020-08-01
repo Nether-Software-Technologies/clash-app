@@ -12,6 +12,9 @@
 #include "Champion.h"
 #include "Summoner.h"
 #include <rapidjson/document.h>
+#include <rapidjson/writer.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/prettywriter.h>
 
 //NAMESPACE
 namespace API {
@@ -29,12 +32,23 @@ namespace API {
 	const std::string SERVER_UPTIME = "/status/v3/shard-data";
 	const std::string DDRAGON_CHAMPION_REQUEST = "http://ddragon.leagueoflegends.com/cdn/10.12.1/data/en_US/";
 }
+
+//TYPEDEF
+typedef rapidjson::Document JSON; 
+
 //CLASS DECLERATION
 class APIHandler {
 private:
 	std::string region = "";
-	std::string callAPI(std::string url);
+	
+	/**
+     * @brief Core API handling function. This function deals with all requests to the API.
+	 * @param url URL build off of the API namespace that's passed to Riot Games' API.
+     * 
+     */
+	JSON callAPI(std::string url);
 	static std::size_t WriteCallback(const char* in, std::size_t size, std::size_t num, std::string* out);
+	void errorHandler(JSON& errorJSON);
 
 public:
 	APIHandler(const std::string& initRegion = "na1") : region(initRegion) {};

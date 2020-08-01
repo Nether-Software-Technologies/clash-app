@@ -36,7 +36,7 @@ Champion::Champion(const Champion& other) {
 }
 
 Champion::Champion(const long& ID) {
-   champID = ID;
+   champID = ID; //for testing
    champName = "Nasus";
    champTitle = "the Curator of the Sands";
    champBlurb = "Nasus is an imposing, jackal-headed Ascended being from ancient Shurima, a heroic figure regarded as a demigod by the people of the desert. Fiercely intelligent, he was a guardian of knowledge and peerless strategist whose wisdom guided the ancient...";
