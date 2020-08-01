@@ -46,6 +46,7 @@ long Summoner::getSummonerLevel() {
 Summoner& Summoner::pullSummonerData(const JSON& json) {
     std::string sumName = name;
     const char* nameCStr = name.c_str();
+    name = json["name"].GetString();
     ID = json["id"].GetString();
     accountID = json["accountId"].GetString();
     profileIconID = json["profileIconId"].GetInt();

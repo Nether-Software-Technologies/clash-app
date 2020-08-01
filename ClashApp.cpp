@@ -113,7 +113,7 @@ TEST_CASE("Summoner test") {
     CHECK(andy.getPuuid() == "Wr3-CKCas-_kOffXfBrRGR79AIsdmIKIHqiBAY-M_PSk2gI5EqMMCQY2xubOuMqW5LeO1tq6APOOcw");
 
     Summoner nether = handler.getSummoner("Netherless");
-    std::cout << "\n" << nether; //why does this say drwegener??
+    std::cout << "\n" << nether;
 
     CHECK(nether.getPuuid() == "CchgrH5jgI8onfn4MgYyqd3G8mdzuxvW8BG_4KuEZxi3Y3huevAHW_5GA7FMOTfAsUJuA5asXYOtEw");
 
