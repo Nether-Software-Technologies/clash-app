@@ -48,4 +48,4 @@ Clash.app
 *.dSYM
 
 # Compling folders
-.[Dd]ebug/
+[Dd]ebug/
