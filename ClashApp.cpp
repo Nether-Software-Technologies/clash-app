@@ -26,6 +26,8 @@ TEST_CASE("Champion Test") {
 TEST_CASE("APIGrab Champion Test") {
     APIHandler handler;
     
+    std::cout << "\n-------------NASUS CHECK-------------\n";
+
     Champion nasus = handler.getChampionDetailed("Nasus");
     
     //given by the JSON locally, the handler above pulls from API
@@ -37,10 +39,12 @@ TEST_CASE("APIGrab Champion Test") {
    
     CHECK(nasus.getChampName() == nasusName);
     CHECK(nasus.getChampNumber() == nasusID);
-    CHECK(nasusTagTest == true);
+    CHECK(nasusTagTest);
     CHECK(nasus.getChampDifficulty() == nasusDifficulty);
     
     std::cout << "\n" << nasus << std::endl;
+    
+    std::cout << "\n-------------KLED CHECK-------------\n\n";
     
     Champion kled = handler.getChampionDetailed("Kled");
    
@@ -53,23 +57,35 @@ TEST_CASE("APIGrab Champion Test") {
 
     CHECK(kled.getChampName() == kledName);
     CHECK(kled.getChampNumber() == kledID);
-    CHECK(kledTagTest == true);
+    CHECK(kledTagTest);
     CHECK(kled.getChampDifficulty() == kledDifficulty);
 
     std::cout << kled << std::endl;
+
+    std::cout << "\n-------------NON-EXISTING CHAMPION CHECK-------------\n\n";
+    
+    try {
+        Champion notExist = handler.getChampionDetailed("Nocturne but with the really cool ghost skin");
+    }
+    catch (std::invalid_argument& e) {
+        std::cout << e.what() << "\n";
+        CHECK(true);
+    }
 }
 
-TEST_CASE("APIHandler test") {
+TEST_CASE("APIHandler errorHandler test") {
+    
+    std::cout << "\n-------------RATE LIMIT ERROR HANDLER CHECK-------------\n\n";
+    
     while (true) {
 		APIHandler handler;
         try {
             handler.getChampionRotation();
         } 
         catch(std::runtime_error& e) {
-            std::cout << e.what();
-            CHECK(true == true);
+            std::cout << e.what() << "\n";
+            CHECK(true);
             break;
 		}
 	}
-    std::cout << "\nPOGGERS\n"; //andySleeper();
 }

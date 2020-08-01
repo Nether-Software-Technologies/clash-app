@@ -5,7 +5,11 @@
  */
 #pragma once
 #include <vector>
+#include <string>
 #include <iostream>
+#include <rapidjson/document.h>
+
+typedef rapidjson::Document JSON;
 
 class Champion {
 private:
@@ -13,7 +17,7 @@ private:
     std::string champName;
     std::vector<std::string> champTags; //stuff like tank, fighter (bruiser), assassin, etc.
     std::string champTitle;
-    std::string champBlurb; //??
+    std::string champBlurb; 
     int champDifficulty;
 
 public:
@@ -92,5 +96,7 @@ public:
      * @param The ostream and the champion to print. ostream is provided by operator <<. 
      */
     friend std::ostream& operator<<(std::ostream& os, const Champion& champ);
+
+    Champion& pullChampionData(const JSON& json);
 
 };

@@ -13,6 +13,7 @@ Summoner::Summoner() {
     revisionDate = 1587944261;
     summonerLevel = 116;
 }
+
 std::ostream& operator<<(std::ostream& os, const Summoner& smner) {
     os << smner.name << " " << smner.summonerLevel << std::endl;
     os << "Encrypted Summoner ID: " << smner.ID << std::endl;
@@ -21,23 +22,23 @@ std::ostream& operator<<(std::ostream& os, const Summoner& smner) {
     return os;
 }
 std::string Summoner::getEncryptedSummonerID() {
-    return this->ID;
+    return ID;
 }
 std::string Summoner::getEncryptedAccountID() {
-    return this->accountID;
+    return accountID;
 }
 std::string Summoner::getPuuid() {
-    return this->puuid;
+    return puuid;
 }
 std::string Summoner::getName() {
-    return this->name;
+    return name;
 }
 int Summoner::getProfileIconID() {
-    return this->profileIconID;
+    return profileIconID;
 }
 long Summoner::getRevisionDate() {
-    return this->revisionDate;
+    return revisionDate;
 }
 long Summoner::getSummonerLevel() {
-    return this->summonerLevel;
+    return summonerLevel;
 }

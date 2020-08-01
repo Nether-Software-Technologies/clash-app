@@ -34,7 +34,7 @@ namespace API {
 }
 
 //TYPEDEF
-typedef rapidjson::Document JSON; 
+typedef rapidjson::Document JSON;
 
 //CLASS DECLERATION
 class APIHandler {

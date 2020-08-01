@@ -35,10 +35,11 @@ JSON APIHandler::callAPI(std::string url) {
     }
     //std::cout << response_code << std::endl; //test cout for error codes //deprecated :(
 	toReturn.Parse(readBuffer.c_str());
-    if (toReturn.IsObject() && (!toReturn.HasParseError())) {
-        if (toReturn.HasMember("status")) {
-		    errorHandler(toReturn);
-	    }
+    if (toReturn.IsObject() || (toReturn.HasParseError())) {
+        if (toReturn.HasMember("status")) 
+            errorHandler(toReturn);
+        else if (toReturn.HasParseError())
+            throw std::logic_error("Error parsing JSON!");      
 	}
 	return toReturn;
 }
@@ -51,12 +52,15 @@ std::string stringify(JSON& json) {
 }
 
 void APIHandler::errorHandler(JSON& errorJSON) {
-    throw std::runtime_error(errorJSON["status"]["message"].GetString() + static_cast<std::string>(", Error code: ") + std::to_string(errorJSON["status"]["status_code"].GetInt()));
+    throw std::runtime_error(errorJSON["status"]["message"].GetString() + static_cast<std::string>(", Error code ") + std::to_string(errorJSON["status"]["status_code"].GetInt()));
 }
 
 Summoner APIHandler::getSummoner(const std::string& summoner) {
 	std::string url_result = API_BASE_NA + API_SUMMONER_NAME + summoner + API_KEY;
     JSON notJSON = callAPI(url_result);
+    if (!notJSON.HasMember(summoner.c_str())) {
+        throw std::invalid_argument("Summoner doesn't exist!");
+    }
     return Summoner();
 }
 void APIHandler::getChampionMastery(const std::string& encryptedSummonerID) {
@@ -104,22 +108,8 @@ JSON APIHandler::getChampions() {
     }
     return notJSON;
 }
-Champion APIHandler::getChampionDetailed(const std::string& champion) {
+Champion APIHandler::getChampionDetailed(const std::string& championName) {
     JSON notJSON = getChampions();
-    if (!notJSON["data"].HasMember(champion.c_str())) {
-        throw std::invalid_argument("Champion doesn't exist!");
-    };
-    const Value& tags = notJSON["data"][champion.c_str()]["tags"];
-    std::vector<std::string> cTags;
-    for (SizeType i = 0; i < tags.Size(); i++) {
-        cTags.push_back(tags[i].GetString());
-    }
-    //notJSONs are nested
-    std::string cBlurb = notJSON["data"][champion.c_str()]["blurb"].GetString();
-    std::string cName = notJSON["data"][champion.c_str()]["name"].GetString();
-    std::string cTitle = notJSON["data"][champion.c_str()]["title"].GetString();
-    int cDifficulty = notJSON["data"][champion.c_str()]["info"]["difficulty"].GetInt();
-    long cID = std::stol(notJSON["data"][champion.c_str()]["key"].GetString());
-    Champion champ(cID, cName, cTags, cTitle, cBlurb, cDifficulty);
-    return champ;
+    Champion champ(championName);
+    return champ.pullChampionData(notJSON);
 }

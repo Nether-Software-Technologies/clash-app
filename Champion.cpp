@@ -5,6 +5,7 @@
  */
 
 #include "Champion.h"
+using namespace rapidjson;
 
 //"very basic lets add nasus pogchamp" -ep
 Champion::Champion() {
@@ -44,6 +45,14 @@ Champion::Champion(const long& ID) {
    champTags.push_back("Tank");
 }
 
+Champion::Champion(const std::string& name) {
+    champID = 0;
+    champName = name;
+    champTitle = "";
+    champBlurb = "";
+    champTags = std::vector<std::string>();
+}
+
 std::ostream& operator<<(std::ostream& os, const Champion& champ) {
     os << champ.champID << std::endl << champ.champName << ", " << champ.champTitle << ".\n" << champ.champBlurb << "\n";
     return os;
@@ -75,6 +84,26 @@ std::vector<std::string> Champion::getChampTags() const {
 
 int Champion::getChampDifficulty() const {
     return champDifficulty;
+}
+
+Champion& Champion::pullChampionData(const JSON& json) {
+    std::string sName = this->getChampName();
+    const char* championName = sName.c_str();
+    if (!json["data"].HasMember(championName)) {
+        throw std::invalid_argument("Champion \"" + static_cast<std::string>(championName) + "\" doesn't exist!");
+    }
+    const Value& tags = json["data"][championName]["tags"];
+    std::vector<std::string> cTags;
+    for (SizeType i = 0; i < tags.Size(); i++) {
+        cTags.push_back(tags[i].GetString());
+    }
+    champTags = cTags;
+    champBlurb = json["data"][championName]["blurb"].GetString();
+    champName = json["data"][championName]["name"].GetString();
+    champTitle = json["data"][championName]["title"].GetString();
+    champDifficulty = json["data"][championName]["info"]["difficulty"].GetInt();
+    champID = std::stol(json["data"][championName]["key"].GetString());
+    return *this;
 }
 
 std::string Champion::getChampBlurb() const {
