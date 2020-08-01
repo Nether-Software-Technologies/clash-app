@@ -46,3 +46,6 @@ Clash.app
 # Mac
 .DS_Store
 *.dSYM
+
+# Compling folders
+[Dd]ebug/
