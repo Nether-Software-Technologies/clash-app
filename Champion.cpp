@@ -90,7 +90,7 @@ Champion& Champion::pullChampionData(const JSON& json) {
     std::string sName = this->getChampName();
     const char* championName = sName.c_str();
     if (!json["data"].HasMember(championName)) {
-        throw std::invalid_argument("Champion \"" + static_cast<std::string>(championName) + "\" doesn't exist!");
+        throw std::invalid_argument("Champion \"" + sName + "\" doesn't exist!");
     }
     const Value& tags = json["data"][championName]["tags"];
     std::vector<std::string> cTags;

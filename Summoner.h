@@ -7,6 +7,11 @@
 #include <string>
 #include <iostream>
 #include <ctime>
+#include <rapidjson/document.h>
+
+using namespace rapidjson;
+
+typedef rapidjson::Document JSON;
 
 class Summoner {
 private:
@@ -46,5 +51,6 @@ public:
     int getProfileIconID();
     long getRevisionDate();
     long getSummonerLevel();
+    Summoner& pullSummonerData(const JSON& json);
     friend std::ostream& operator<<(std::ostream& os, const Summoner& smner);
 };

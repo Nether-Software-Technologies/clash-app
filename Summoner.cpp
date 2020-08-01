@@ -42,3 +42,15 @@ long Summoner::getRevisionDate() {
 long Summoner::getSummonerLevel() {
     return summonerLevel;
 }
+
+Summoner& Summoner::pullSummonerData(const JSON& json) {
+    std::string sumName = name;
+    const char* nameCStr = name.c_str();
+    ID = json["id"].GetString();
+    accountID = json["accountId"].GetString();
+    profileIconID = json["profileIconId"].GetInt();
+    puuid = json["puuid"].GetString();
+    revisionDate = static_cast<long>(json["revisionDate"].GetInt64());
+    summonerLevel = json["summonerLevel"].GetInt();
+    return *this;
+}

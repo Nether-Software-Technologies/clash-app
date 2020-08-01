@@ -89,3 +89,32 @@ TEST_CASE("APIHandler errorHandler test") {
 		}
 	}
 }
+
+TEST_CASE("Stringify test") {
+
+    std::cout << "\n-------------STRINGIFY TEST-------------\n\n";
+
+    APIHandler handler;
+    
+    CHECK(handler.getServerStatus() != "");
+
+    std::cout << handler.getServerStatus();
+}
+
+TEST_CASE("Summoner test") {
+
+    std::cout << "\n-------------SUMMONER TEST-------------\n\n";
+
+    APIHandler handler;
+
+    Summoner andy = handler.getSummoner("DrWegener");
+    std::cout << "\n" << andy;
+
+    CHECK(andy.getPuuid() == "Wr3-CKCas-_kOffXfBrRGR79AIsdmIKIHqiBAY-M_PSk2gI5EqMMCQY2xubOuMqW5LeO1tq6APOOcw");
+
+    Summoner nether = handler.getSummoner("Netherless");
+    std::cout << "\n" << nether; //why does this say drwegener??
+
+    CHECK(nether.getPuuid() == "CchgrH5jgI8onfn4MgYyqd3G8mdzuxvW8BG_4KuEZxi3Y3huevAHW_5GA7FMOTfAsUJuA5asXYOtEw");
+
+}

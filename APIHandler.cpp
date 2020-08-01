@@ -58,10 +58,10 @@ void APIHandler::errorHandler(JSON& errorJSON) {
 Summoner APIHandler::getSummoner(const std::string& summoner) {
 	std::string url_result = API_BASE_NA + API_SUMMONER_NAME + summoner + API_KEY;
     JSON notJSON = callAPI(url_result);
-    if (!notJSON.HasMember(summoner.c_str())) {
-        throw std::invalid_argument("Summoner doesn't exist!");
+    if (notJSON.HasParseError()) {
+        throw std::logic_error("Error parsing JSON");
     }
-    return Summoner();
+    return Summoner().pullSummonerData(notJSON);
 }
 void APIHandler::getChampionMastery(const std::string& encryptedSummonerID) {
     std::string url_result = API_BASE_NA + API_MASTERY_SUMMONER + encryptedSummonerID + API_KEY;
