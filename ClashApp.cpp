@@ -5,22 +5,21 @@
  */
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#define TEST 1
 #include "APIHandler.h"
 #include <algorithm>
 #include <doctest/doctest.h>
 //This file probably wont be used for anything other than testing until later xD
-
+#ifdef TEST
 TEST_CASE("Champion Test") {
     Champion defaultC;
     CHECK(defaultC.getChampName() == "Nasus");
     CHECK(defaultC.getChampNumber() == 75);
     CHECK(defaultC.getChampBlurb() == "Nasus is an imposing, jackal-headed Ascended being from ancient Shurima, a heroic figure regarded as a demigod by the people of the desert. Fiercely intelligent, he was a guardian of knowledge and peerless strategist whose wisdom guided the ancient...");
     CHECK(defaultC.getChampDifficulty() == 6);
-    std::vector<std::string> defaultTags;
-    defaultTags.push_back("Fighter");
-    defaultTags.push_back("Tank");
-    bool tagCheck = std::equal(defaultTags.begin(), defaultTags.end(), defaultC.getChampTags().begin());
-    CHECK(tagCheck == true);
+	std::vector<std::string> defaultTags = {"Fighter", "Tank"};
+	bool tagCheck = std::equal(defaultTags.begin(), defaultTags.end(), defaultC.getChampTags().begin());
+	CHECK(tagCheck == true);
 }
 
 TEST_CASE("APIGrab Champion Test") {
@@ -118,3 +117,4 @@ TEST_CASE("Summoner test") {
     CHECK(nether.getPuuid() == "CchgrH5jgI8onfn4MgYyqd3G8mdzuxvW8BG_4KuEZxi3Y3huevAHW_5GA7FMOTfAsUJuA5asXYOtEw");
 
 }
+#endif

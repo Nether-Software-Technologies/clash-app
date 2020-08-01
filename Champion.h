@@ -63,6 +63,7 @@ public:
      * @brief Finds the champion's name given the key.
      * @param Champion key.
      * @throw Throws a logic_error in the case that the champion name is not found (does not exist).
+     * @return Returns champion name if found.
      */
     std::string findChampName(const int& champNum) const;
 
