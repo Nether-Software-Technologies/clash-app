@@ -16,7 +16,7 @@
 //NAMESPACE
 namespace API {
 	const std::string API_BASE_NA = "https://na1.api.riotgames.com/lol";
-	const std::string API_KEY = "?api_key=RGAPI-c9b6c60e-b4a9-49bb-ad9b-028b56d646db";
+	const std::string API_KEY = "?api_key=RGAPI-36620257-39d9-4a4a-8623-108883a2ed65";
 	const std::string API_SUMMONER_NAME = "/summoner/v4/summoners/by-name/";
 	const std::string API_MASTERY_SUMMONER = "/champion-mastery/v4/champion-masteries/by-summoner/";
 	const std::string API_MASTERY_SCORE = "/champion-mastery/v4/scores/by-summoner/";
