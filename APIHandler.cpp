@@ -35,12 +35,10 @@ JSON* APIHandler::callAPI(std::string url) const {
     }
     //std::cout << response_code << std::endl; //test cout for error codes //deprecated :(
 	toReturn->Parse(readBuffer.c_str());
-    if (toReturn->IsObject() || (toReturn->HasParseError())) {
-        if (toReturn->HasMember("status")) 
-            errorHandler(*toReturn);
-        else if (toReturn->HasParseError())
-            throw std::logic_error("Error parsing JSON!");      
-	}
+    if (toReturn->HasParseError())
+        throw std::logic_error("Error parsing JSON!");
+    if (toReturn->HasMember("status"))
+        errorHandler(*toReturn);
 	return toReturn;
 }
 
