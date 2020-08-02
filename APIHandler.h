@@ -9,8 +9,6 @@
 #include <string>
 #include <iomanip> //do we need?
 #include <curl/curl.h>
-#include "Champion.h"
-#include "Summoner.h"
 #include <rapidjson/document.h>
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
@@ -30,7 +28,7 @@ namespace API {
 	const std::string CLASH_TOURNAMENT_LIST = "/clash/v1/tournaments";
 	const std::string CLASH_TOURNAMENT = "/clash/v1/tournaments/by-team/";
 	const std::string SERVER_UPTIME = "/status/v3/shard-data";
-	const std::string DDRAGON_CHAMPION_REQUEST = "http://ddragon.leagueoflegends.com/cdn/10.12.1/data/en_US/";
+	const std::string DDRAGON_CHAMPION_REQUEST = "http://ddragon.leagueoflegends.com/cdn/10.15.1/data/en_US/";
 }
 
 //TYPEDEF
@@ -46,29 +44,28 @@ private:
 	 * @param url URL build off of the API namespace that's passed to Riot Games' API.
      * 
      */
-	JSON callAPI(std::string url);
+	JSON callAPI(std::string url) const;
 	static std::size_t WriteCallback(const char* in, std::size_t size, std::size_t num, std::string* out);
-	void errorHandler(JSON& errorJSON);
+	void errorHandler(const JSON& errorJSON) const;
 
 public:
 	APIHandler(const std::string& initRegion = "na1") : region(initRegion) {};
 	//SUMMONER-V4
-	Summoner getSummoner(const std::string& summonerID);
+	JSON getSummoner(const std::string& name) const;
 	//CHAMPION-MASTERY-V4
-	void getChampionMastery(const std::string& encryptedSummonerID);
-	void getMasteryScore(const std::string& encryptedSummonerID);
-	void getChampionMasteryByChampion(const std::string& encryptedSummonerID, const long& championID);
+	void getChampionMastery(const std::string& encryptedSummonerID) const;
+	void getMasteryScore(const std::string& encryptedSummonerID) const;
+	void getChampionMasteryByChampion(const std::string& encryptedSummonerID, const long& championID) const;
 	//CHAMPION-V3
-	void getChampionRotation();
+	void getChampionRotation() const;
 	//CLASH-V1
-	void getClashBySummoner(const std::string& encryptedSummonerID);
-	void getClashByTeam(const std::string& teamID);
-	void getTournamentByTeam(const std::string& teamID);
-	void getTournamentList();
+	void getClashBySummoner(const std::string& encryptedSummonerID) const;
+	void getClashByTeam(const std::string& teamID) const;
+	void getTournamentByTeam(const std::string& teamID) const;
+	void getTournamentList() const;
 	//LOL-STATUS-V3
-	std::string getServerStatus();
+	void getServerStatus() const;
 	//DDRAGON-CHAMPION-JSON
-	rapidjson::Document getChampions();
-	Champion getChampionDetailed(const std::string& champion);
+	JSON getChampions() const;
 };
 

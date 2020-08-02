@@ -8,10 +8,12 @@
 #include <iostream>
 #include <ctime>
 #include <rapidjson/document.h>
+#include "APIHandler.h"
 
 using namespace rapidjson;
 
 typedef rapidjson::Document JSON;
+extern const APIHandler API_LINK;
 
 class Summoner {
 private:
@@ -41,9 +43,7 @@ public:
      * @param summonerLevel %Summoner level associated with the summoner.
      * 
      */
-    Summoner(std::string initAccount, int initProfileIconID, long initRevisionDate, std::string initName,
-    std::string initID, std::string initPuuid, long initSummonerLevel) : accountID(initAccount), profileIconID(initProfileIconID),
-    revisionDate(initRevisionDate), name(initName), ID(initID), puuid(initPuuid), summonerLevel(initSummonerLevel) {};
+    Summoner(const std::string name);
     std::string getEncryptedSummonerID();
     std::string getEncryptedAccountID();
     std::string getPuuid();

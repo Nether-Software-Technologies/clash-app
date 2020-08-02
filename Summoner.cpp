@@ -4,14 +4,9 @@
  * @
  */
 #include "Summoner.h"
-Summoner::Summoner() {
-    ID = "_Ify1e4i75PjTrNTY_7MzuW25RgcSLweXYF6Vj4ZCBz9NUc";
-    accountID = "0Esh1QsHwIJpYov6cZLO1KkCEoMQggSwpOK5eyhVMih7vvU";
-    puuid = "Wr3-CKCas-_kOffXfBrRGR79AIsdmIKIHqiBAY-M_PSk2gI5EqMMCQY2xubOuMqW5LeO1tq6APOOcw";
-    name = "DrWegener"; //andyW
-    profileIconID = 4068;
-    revisionDate = 1587944261;
-    summonerLevel = 116;
+Summoner::Summoner(const std::string name){
+    JSON POE = API_LINK.getSummoner(name);
+    this->pullSummonerData(POE);
 }
 
 std::ostream& operator<<(std::ostream& os, const Summoner& smner) {
@@ -44,8 +39,6 @@ long Summoner::getSummonerLevel() {
 }
 
 Summoner& Summoner::pullSummonerData(const JSON& json) {
-    std::string sumName = name;
-    const char* nameCStr = name.c_str();
     name = json["name"].GetString();
     ID = json["id"].GetString();
     accountID = json["accountId"].GetString();

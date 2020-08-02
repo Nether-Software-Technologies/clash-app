@@ -8,8 +8,12 @@
 #include <string>
 #include <iostream>
 #include <rapidjson/document.h>
+#include <rapidjson/filewritestream.h>
+#include "APIHandler.h"
 
 typedef rapidjson::Document JSON;
+extern const APIHandler API_LINK;
+const JSON CHAMPION_DATA = API_LINK.getChampions();
 
 class Champion {
 private:
@@ -26,18 +30,6 @@ public:
      * @brief Default constructor. Creates a Champion() object of Nasus. PogChamp.
      */
     Champion();
-
-    /**
-     * @brief Constructor with all variables initalized. Called from parseJSON.
-     * @param ID is the champion ID number, name is the champion name, 
-     *        tags are the attributes of the champion, title is the snippet of the character, blurb is blurb and difficulty is difficulty
-     */
-    Champion(long ID, std::string name, std::vector<std::string> tags, std::string title, std::string blurb, int difficulty);
-    /**
-     * @brief Copy constructor.
-     * @param Other champion to be copied.
-     */
-    Champion(const Champion& other);
 
     /**
      * @brief Assignment operator.
@@ -74,7 +66,7 @@ public:
 
     /**
      * @brief Retrieves the champion name.
-     */
+     */ 
     std::string getChampName() const;
 
     /**
@@ -98,6 +90,6 @@ public:
      */
     friend std::ostream& operator<<(std::ostream& os, const Champion& champ);
 
-    Champion& pullChampionData(const JSON& json);
+    Champion& pullChampionData(const char* json);
 
 };
