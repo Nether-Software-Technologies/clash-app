@@ -7,7 +7,7 @@
 #include "Champion.h"
 using namespace rapidjson;
 
-extern const JSON* CHAMPION_DATA = API_LINK.getChampions();
+const JSON* CHAMPION_DATA = API_LINK.getChampions();
 
 //"very basic lets add nasus pogchamp" -ep
 Champion::Champion() { 
