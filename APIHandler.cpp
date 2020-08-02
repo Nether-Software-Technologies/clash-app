@@ -49,7 +49,7 @@ void APIHandler::errorHandler(const JSON& errorJSON) const {
 }
 
 JSON* APIHandler::getSummoner(const std::string& name) const {
-    std::string url_result = API_BASE_NA + API_SUMMONER_NAME + API_KEY;
+    std::string url_result = API_BASE_NA + API_SUMMONER_NAME + name + API_KEY;
     JSON* POE = callAPI(url_result);
     return POE;
 }
