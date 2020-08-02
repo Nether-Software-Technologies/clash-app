@@ -1,3 +1,0 @@
-﻿  Champion.cpp
-LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/OPT:ICF' specification
-  clash-app.vcxproj -> E:\Projects\clash-app\Release\clash-app.exe
