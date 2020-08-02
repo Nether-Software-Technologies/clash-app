@@ -36,6 +36,7 @@ TEST_CASE("File Storage Test For Champion") {
    CHECK(true);
 }
 
+/**
 TEST_CASE("Champion Test") {
 	Champion defaultC;
 	CHECK(defaultC.getChampName() == "Nasus");
@@ -46,7 +47,7 @@ TEST_CASE("Champion Test") {
 	bool tagCheck = std::equal(defaultTags.begin(), defaultTags.end(), defaultC.getChampTags().begin());
 	CHECK(tagCheck == true);
 }
-
+**/
 TEST_CASE("APIGrab Champion Test") {
     APIHandler handler;
     

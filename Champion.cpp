@@ -7,6 +7,8 @@
 #include "Champion.h"
 using namespace rapidjson;
 
+extern const JSON* CHAMPION_DATA = API_LINK.getChampions();
+
 //"very basic lets add nasus pogchamp" -ep
 Champion::Champion() { 
     // andyW
@@ -66,27 +68,20 @@ std::string stringify(const JSON& json) {
 }
 
 Champion& Champion::pullChampionData(const char* initName) {
-	if (CHAMPION_DATA.IsObject()) {
-		std::cout << "GOOD!";
-	} else {
-		std::cout << "BAD!";
-		throw std::logic_error("leave");
-	}
-
-	if (!CHAMPION_DATA["data"].HasMember(initName)) {
+	if (!(*CHAMPION_DATA)["data"].HasMember(initName)) {
         throw std::invalid_argument("Champion \"" + static_cast<std::string>(initName) + "\" doesn't exist!");
     }
-    const Value& tags = CHAMPION_DATA["data"][initName]["tags"];
+    const Value& tags = (*CHAMPION_DATA)["data"][initName]["tags"];
     std::vector<std::string> cTags;
     for (SizeType i = 0; i < tags.Size(); i++) {
         cTags.push_back(tags[i].GetString());
     }
     champTags = cTags;
-    champBlurb = CHAMPION_DATA["data"][initName]["blurb"].GetString();
-    champName = CHAMPION_DATA["data"][initName]["name"].GetString();
-    champTitle = CHAMPION_DATA["data"][initName]["title"].GetString();
-    champDifficulty = CHAMPION_DATA["data"][initName]["info"]["difficulty"].GetInt();
-    champID = std::stol(CHAMPION_DATA["data"][initName]["key"].GetString());
+    champBlurb = (*CHAMPION_DATA)["data"][initName]["blurb"].GetString();
+    champName = (*CHAMPION_DATA)["data"][initName]["name"].GetString();
+    champTitle = (*CHAMPION_DATA)["data"][initName]["title"].GetString();
+    champDifficulty = (*CHAMPION_DATA)["data"][initName]["info"]["difficulty"].GetInt();
+    champID = std::stol((*CHAMPION_DATA)["data"][initName]["key"].GetString());
     return *this;
 }
 

@@ -17,7 +17,7 @@
 //NAMESPACE
 namespace API {
 	const std::string API_BASE_NA = "https://na1.api.riotgames.com/lol";
-	const std::string API_KEY = "?api_key=RGAPI-36620257-39d9-4a4a-8623-108883a2ed65";
+	const std::string API_KEY = "?api_key=RGAPI-71fc8d99-6fdc-4951-a68c-08b8d5352d43";
 	const std::string API_SUMMONER_NAME = "/summoner/v4/summoners/by-name/";
 	const std::string API_MASTERY_SUMMONER = "/champion-mastery/v4/champion-masteries/by-summoner/";
 	const std::string API_MASTERY_SCORE = "/champion-mastery/v4/scores/by-summoner/";
@@ -44,14 +44,14 @@ private:
 	 * @param url URL build off of the API namespace that's passed to Riot Games' API.
      * 
      */
-	JSON callAPI(std::string url) const;
+	JSON* callAPI(std::string url) const;
 	static std::size_t WriteCallback(const char* in, std::size_t size, std::size_t num, std::string* out);
 	void errorHandler(const JSON& errorJSON) const;
 
 public:
 	APIHandler(const std::string& initRegion = "na1") : region(initRegion) {};
 	//SUMMONER-V4
-	JSON getSummoner(const std::string& name) const;
+	JSON* getSummoner(const std::string& name) const;
 	//CHAMPION-MASTERY-V4
 	void getChampionMastery(const std::string& encryptedSummonerID) const;
 	void getMasteryScore(const std::string& encryptedSummonerID) const;
@@ -66,6 +66,6 @@ public:
 	//LOL-STATUS-V3
 	void getServerStatus() const;
 	//DDRAGON-CHAMPION-JSON
-	JSON getChampions() const;
+	JSON* getChampions() const;
 };
 

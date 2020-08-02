@@ -13,7 +13,6 @@
 
 typedef rapidjson::Document JSON;
 extern const APIHandler API_LINK;
-const JSON CHAMPION_DATA = API_LINK.getChampions();
 
 class Champion {
 private:
