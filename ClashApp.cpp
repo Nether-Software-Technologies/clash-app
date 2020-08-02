@@ -49,13 +49,12 @@ TEST_CASE("Champion Test") {
 }
 **/
 TEST_CASE("APIGrab Champion Test") {
-    APIHandler handler;
     
     std::cout << "\n-------------NASUS CHECK-------------\n";
 
 	Champion nasus("Nasus");
 
-	//given by the JSON locally, the handler above pulls from API
+	//given by the JSON locally, the API_LINK above pulls from API
 	long nasusID = 75;
 	int nasusDifficulty = 6;
     std::string nasusName = "Nasus";
@@ -73,7 +72,7 @@ TEST_CASE("APIGrab Champion Test") {
     
     Champion kled("Kled");
    
-    //given by the JSON locally, the handler above pulls from API
+    //given by the JSON locally, the API_LINK above pulls from API
     long kledID = 240;
     int kledDifficulty = 7;
     std::string kledName = "Kled";
@@ -103,9 +102,8 @@ TEST_CASE("APIHandler errorHandler test") {
     std::cout << "\n-------------RATE LIMIT ERROR HANDLER CHECK-------------\n\n";
     
     while (true) {
-		APIHandler handler;
         try {
-            handler.getChampionRotation();
+            API_LINK.getChampionRotation();
         } 
         catch(std::runtime_error& e) {
             std::cout << e.what() << "\n";
@@ -118,19 +116,15 @@ TEST_CASE("APIHandler errorHandler test") {
 TEST_CASE("Stringify test") {
 
     std::cout << "\n-------------STRINGIFY TEST-------------\n\n";
-
-    APIHandler handler;
     
-    CHECK(handler.getServerStatus() != "");
+    CHECK(API_LINK.getServerStatus() != "");
 
-    std::cout << handler.getServerStatus();
+    std::cout << API_LINK.getServerStatus();
 }
 **/
 TEST_CASE("Summoner test") {
 
     std::cout << "\n-------------SUMMONER TEST-------------\n\n";
-
-    APIHandler handler;
 
     Summoner andy("DrWegener");
 	std::cout << "\n" << andy;
