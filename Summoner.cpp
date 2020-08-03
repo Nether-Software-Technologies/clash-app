@@ -4,7 +4,7 @@
  * @
  */
 #include "Summoner.h"
-Summoner::Summoner(const std::string name){
+Summoner::Summoner(const std::string& name){
     JSON* POE = API_LINK.getSummoner(name);
     this->pullSummonerData(*POE);
 }

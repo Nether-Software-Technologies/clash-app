@@ -43,7 +43,7 @@ public:
      * @param summonerLevel %Summoner level associated with the summoner.
      * 
      */
-    Summoner(const std::string name);
+    Summoner(const std::string& name);
     std::string getEncryptedSummonerID();
     std::string getEncryptedAccountID();
     std::string getPuuid();
