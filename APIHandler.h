@@ -44,7 +44,7 @@ private:
 	 * @param url URL build off of the API namespace that's passed to Riot Games' API.
      * 
      */
-	JSON* callAPI(std::string url) const;
+	JSON* callAPI(const std::string& url) const;
 	static std::size_t WriteCallback(const char* in, std::size_t size, std::size_t num, std::string* out);
 	void errorHandler(const JSON& errorJSON) const;
 

@@ -8,10 +8,8 @@
 #include "Champion.h"
 #include <iostream>
 
-using namespace API;
 using namespace rapidjson;
-
-
+using namespace API;
 
 //CLASS DEFINITION
 std::size_t APIHandler::WriteCallback(const char* in, std::size_t size, std::size_t num, std::string* out) {
@@ -19,7 +17,7 @@ std::size_t APIHandler::WriteCallback(const char* in, std::size_t size, std::siz
     out->append(in, totalBytes);
     return totalBytes;
 }
-JSON* APIHandler::callAPI(std::string url) const {
+JSON* APIHandler::callAPI(const std::string& url) const {
     CURL* curl;
     CURLcode res;
     std::string readBuffer = "";
@@ -47,49 +45,49 @@ void APIHandler::errorHandler(const JSON& errorJSON) const {
 }
 
 JSON* APIHandler::getSummoner(const std::string& name) const {
-    std::string url_result = API_BASE_NA + API_SUMMONER_NAME + name + API_KEY;
+    const std::string url_result = API_BASE_NA + API_SUMMONER_NAME + name + API_KEY;
     JSON* POE = callAPI(url_result);
     return POE;
 }
 
 void APIHandler::getChampionMastery(const std::string& encryptedSummonerID) const {
-    std::string url_result = API_BASE_NA + API_MASTERY_SUMMONER + encryptedSummonerID + API_KEY;
+    const std::string url_result = API_BASE_NA + API_MASTERY_SUMMONER + encryptedSummonerID + API_KEY;
     JSON* POE = callAPI(url_result);
 }
 void APIHandler::getChampionMasteryByChampion(const std::string& encryptedSummonerID, const long& championID) const {
-    std::string url_result = API_BASE_NA + API_MASTERY_SUMMONER + encryptedSummonerID + BY_CHAMPION + std::to_string(championID) + API_KEY;
+    const std::string url_result = API_BASE_NA + API_MASTERY_SUMMONER + encryptedSummonerID + BY_CHAMPION + std::to_string(championID) + API_KEY;
     JSON* POE = callAPI(url_result);
 }
 void APIHandler::getMasteryScore(const std::string& encryptedSummonerID) const {
-    std::string url_result = API_BASE_NA + API_MASTERY_SCORE + encryptedSummonerID + API_KEY;
+    const std::string url_result = API_BASE_NA + API_MASTERY_SCORE + encryptedSummonerID + API_KEY;
     JSON* POE = callAPI(url_result);
 }
 void APIHandler::getChampionRotation() const {
-    std::string url_result = API_BASE_NA + CHAMPION_ROTATION + API_KEY;
+    const std::string url_result = API_BASE_NA + CHAMPION_ROTATION + API_KEY;
     JSON* POE = callAPI(url_result);
 }
 void APIHandler::getClashBySummoner(const std::string& encryptedSummonerID) const {
-    std::string url_result = API_BASE_NA + CLASH_SUMMONER + encryptedSummonerID + API_KEY;
+    const std::string url_result = API_BASE_NA + CLASH_SUMMONER + encryptedSummonerID + API_KEY;
     JSON* POE = callAPI(url_result);
 }
 void APIHandler::getClashByTeam(const std::string& teamID) const {
-    std::string url_result = API_BASE_NA + CLASH_TEAM + teamID + API_KEY;
+    const std::string url_result = API_BASE_NA + CLASH_TEAM + teamID + API_KEY;
     JSON* POE = callAPI(url_result);
 }
 void APIHandler::getTournamentByTeam(const std::string& teamID) const {
-    std::string url_result = API_BASE_NA + CLASH_TOURNAMENT + teamID + API_KEY;
+    const std::string url_result = API_BASE_NA + CLASH_TOURNAMENT + teamID + API_KEY;
     JSON* POE = callAPI(url_result);
 }
 void APIHandler::getTournamentList() const {
-    std::string url_result = API_BASE_NA + CLASH_TOURNAMENT_LIST + API_KEY;
+    const std::string url_result = API_BASE_NA + CLASH_TOURNAMENT_LIST + API_KEY;
     JSON* POE = callAPI(url_result);
 }
 void APIHandler::getServerStatus() const {
-    std::string url_result = API_BASE_NA + SERVER_UPTIME + API_KEY;
+    const std::string url_result = API_BASE_NA + SERVER_UPTIME + API_KEY;
     JSON* POE = callAPI(url_result);
 }
 JSON* APIHandler::getChampions() const {
-    std::string url_result = DDRAGON_CHAMPION_REQUEST + "champion.json";
+    const std::string url_result = DDRAGON_CHAMPION_REQUEST + "champion.json";
     JSON* POE = callAPI(url_result);
 	return POE;
 }
