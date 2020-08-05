@@ -7,12 +7,9 @@
 #include <string>
 #include <iostream>
 #include <ctime>
-#include <rapidjson/document.h>
+#include <nlohmann/json.hpp>
 #include "APIHandler.h"
 
-using namespace rapidjson;
-
-typedef rapidjson::Document JSON;
 extern const APIHandler API_LINK;
 
 class Summoner {

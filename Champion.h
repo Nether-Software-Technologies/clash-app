@@ -11,7 +11,7 @@
 #include <rapidjson/filewritestream.h>
 #include "APIHandler.h"
 
-typedef rapidjson::Document JSON;
+using JSON = nlohmann::json;
 extern const APIHandler API_LINK;
 
 class Champion {
@@ -89,6 +89,6 @@ public:
      */
     friend std::ostream& operator<<(std::ostream& os, const Champion& champ);
 
-    Champion& pullChampionData(const char* json);
+    Champion& pullChampionData(const std::string& json);
 
 };

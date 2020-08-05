@@ -8,8 +8,8 @@
 #include "Champion.h"
 #include <iostream>
 
-using namespace rapidjson;
 using namespace API;
+using JSON = nlohmann::json;
 
 //CLASS DEFINITION
 std::size_t APIHandler::WriteCallback(const char* in, std::size_t size, std::size_t num, std::string* out) {
@@ -17,77 +17,74 @@ std::size_t APIHandler::WriteCallback(const char* in, std::size_t size, std::siz
     out->append(in, totalBytes);
     return totalBytes;
 }
-JSON* APIHandler::callAPI(const std::string& url) const {
+JSON APIHandler::callAPI(const std::string& url) const {
     CURL* curl;
     CURLcode res;
     std::string readBuffer = "";
-    JSON* toReturn = new JSON();
     curl = curl_easy_init();
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-        curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcurl-agent/1.0");
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void*)&readBuffer);
-        res = curl_easy_perform(curl);           
+        curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+        res = curl_easy_perform(curl); //problem line           
         curl_easy_cleanup(curl);
     }
     //std::cout << response_code << std::endl; //test cout for error codes //deprecated :(
-	toReturn->Parse(readBuffer.c_str());
-    if (toReturn->HasParseError())
-        throw std::logic_error("Error parsing JSON!");
-    if (toReturn->HasMember("status"))
-        errorHandler(*toReturn);
+    auto toReturn = JSON::parse(readBuffer);
+    if (toReturn.find("status") != toReturn.end())
+        errorHandler(toReturn);
 	return toReturn;
 }
 
 void APIHandler::errorHandler(const JSON& errorJSON) const {
-    throw std::runtime_error(errorJSON["status"]["message"].GetString() + static_cast<std::string>(", Error code ") + std::to_string(errorJSON["status"]["status_code"].GetInt()));
+    throw std::runtime_error(errorJSON["status"]["message"].get<std::string>() + ", Error code " + std::to_string(errorJSON["status"]["status_code"].get<int>()));
 }
 
-JSON* APIHandler::getSummoner(const std::string& name) const {
+JSON APIHandler::getSummoner(const std::string& name) const {
     const std::string url_result = API_BASE_NA + API_SUMMONER_NAME + name + API_KEY;
-    JSON* POE = callAPI(url_result);
+    JSON POE = callAPI(url_result);
     return POE;
 }
 
 void APIHandler::getChampionMastery(const std::string& encryptedSummonerID) const {
     const std::string url_result = API_BASE_NA + API_MASTERY_SUMMONER + encryptedSummonerID + API_KEY;
-    JSON* POE = callAPI(url_result);
+    JSON POE = callAPI(url_result);
 }
 void APIHandler::getChampionMasteryByChampion(const std::string& encryptedSummonerID, const long& championID) const {
     const std::string url_result = API_BASE_NA + API_MASTERY_SUMMONER + encryptedSummonerID + BY_CHAMPION + std::to_string(championID) + API_KEY;
-    JSON* POE = callAPI(url_result);
+    JSON POE = callAPI(url_result);
 }
 void APIHandler::getMasteryScore(const std::string& encryptedSummonerID) const {
     const std::string url_result = API_BASE_NA + API_MASTERY_SCORE + encryptedSummonerID + API_KEY;
-    JSON* POE = callAPI(url_result);
+    JSON POE = callAPI(url_result);
 }
 void APIHandler::getChampionRotation() const {
     const std::string url_result = API_BASE_NA + CHAMPION_ROTATION + API_KEY;
-    JSON* POE = callAPI(url_result);
+    JSON POE = callAPI(url_result);
 }
 void APIHandler::getClashBySummoner(const std::string& encryptedSummonerID) const {
     const std::string url_result = API_BASE_NA + CLASH_SUMMONER + encryptedSummonerID + API_KEY;
-    JSON* POE = callAPI(url_result);
+    JSON POE = callAPI(url_result);
 }
 void APIHandler::getClashByTeam(const std::string& teamID) const {
     const std::string url_result = API_BASE_NA + CLASH_TEAM + teamID + API_KEY;
-    JSON* POE = callAPI(url_result);
+    JSON POE = callAPI(url_result);
 }
 void APIHandler::getTournamentByTeam(const std::string& teamID) const {
     const std::string url_result = API_BASE_NA + CLASH_TOURNAMENT + teamID + API_KEY;
-    JSON* POE = callAPI(url_result);
+    JSON POE = callAPI(url_result);
 }
 void APIHandler::getTournamentList() const {
     const std::string url_result = API_BASE_NA + CLASH_TOURNAMENT_LIST + API_KEY;
-    JSON* POE = callAPI(url_result);
+    JSON POE = callAPI(url_result);
 }
 void APIHandler::getServerStatus() const {
     const std::string url_result = API_BASE_NA + SERVER_UPTIME + API_KEY;
-    JSON* POE = callAPI(url_result);
+    JSON POE = callAPI(url_result);
 }
-JSON* APIHandler::getChampions() const {
+JSON APIHandler::getChampions() const {
     const std::string url_result = DDRAGON_CHAMPION_REQUEST + "champion.json";
-    JSON* POE = callAPI(url_result);
+    JSON POE = callAPI(url_result); //problem line called from here
 	return POE;
 }

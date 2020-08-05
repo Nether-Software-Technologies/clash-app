@@ -49,6 +49,8 @@ TEST_CASE("Champion Test") {
 }
 **/
 TEST_CASE("APIGrab Champion Test") {
+
+    curl_global_init(CURL_GLOBAL_ALL);
     
     std::cout << "\n-------------NASUS CHECK-------------\n";
 

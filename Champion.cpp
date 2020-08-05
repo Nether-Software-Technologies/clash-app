@@ -5,9 +5,8 @@
  */
 
 #include "Champion.h"
-using namespace rapidjson;
 
-const JSON* CHAMPION_DATA = API_LINK.getChampions();
+const JSON CHAMPION_DATA = API_LINK.getChampions();
 
 //"very basic lets add nasus pogchamp" -ep
 Champion::Champion() { 
@@ -60,28 +59,18 @@ int Champion::getChampDifficulty() const {
     return champDifficulty;
 }
 
-std::string stringify(const JSON& json) {
-	StringBuffer buffer;
-	PrettyWriter<StringBuffer> writer(buffer);
-	json.Accept(writer);
-	return buffer.GetString();
-}
 
-Champion& Champion::pullChampionData(const char* initName) {
-	if (!(*CHAMPION_DATA)["data"].HasMember(initName)) {
-        throw std::invalid_argument("Champion \"" + static_cast<std::string>(initName) + "\" doesn't exist!");
+Champion& Champion::pullChampionData(const std::string& initName) {
+	if (CHAMPION_DATA["data"].find(initName) == CHAMPION_DATA["data"].end()) {
+        throw std::invalid_argument("Champion \"" + initName + "\" doesn't exist!");
     }
-    const Value& tags = (*CHAMPION_DATA)["data"][initName]["tags"];
-    std::vector<std::string> cTags;
-    for (SizeType i = 0; i < tags.Size(); i++) {
-        cTags.push_back(tags[i].GetString());
-    }
+    const std::vector<std::string> cTags = CHAMPION_DATA["data"][initName]["tags"].get<std::vector<std::string>>();
     champTags = cTags;
-    champBlurb = (*CHAMPION_DATA)["data"][initName]["blurb"].GetString();
-    champName = (*CHAMPION_DATA)["data"][initName]["name"].GetString();
-    champTitle = (*CHAMPION_DATA)["data"][initName]["title"].GetString();
-    champDifficulty = (*CHAMPION_DATA)["data"][initName]["info"]["difficulty"].GetInt();
-    champID = std::stol((*CHAMPION_DATA)["data"][initName]["key"].GetString());
+    champBlurb = CHAMPION_DATA["data"][initName]["blurb"].get<std::string>();
+    champName = CHAMPION_DATA["data"][initName]["name"].get<std::string>();
+    champTitle = CHAMPION_DATA["data"][initName]["title"].get<std::string>();
+    champDifficulty = CHAMPION_DATA["data"][initName]["info"]["difficulty"].get<int>();
+    champID = std::stol(CHAMPION_DATA["data"][initName]["key"].get<std::string>());
     return *this;
 }
 

@@ -4,9 +4,14 @@
  * @
  */
 #include "Summoner.h"
+
+Summoner::Summoner() {
+
+}
+
 Summoner::Summoner(const std::string& name){
-    JSON* POE = API_LINK.getSummoner(name);
-    this->pullSummonerData(*POE);
+    JSON POE = API_LINK.getSummoner(name);
+    this->pullSummonerData(POE);
 }
 
 std::ostream& operator<<(std::ostream& os, const Summoner& smner) {
@@ -39,12 +44,12 @@ long Summoner::getSummonerLevel() {
 }
 
 Summoner& Summoner::pullSummonerData(const JSON& json) {
-    name = json["name"].GetString();
-    ID = json["id"].GetString();
-    accountID = json["accountId"].GetString();
-    profileIconID = json["profileIconId"].GetInt();
-    puuid = json["puuid"].GetString();
-    revisionDate = static_cast<long>(json["revisionDate"].GetInt64());
-    summonerLevel = json["summonerLevel"].GetInt();
+    name = json["name"].get<std::string>();
+    ID = json["id"].get<std::string>();
+    accountID = json["accountId"].get<std::string>();
+    profileIconID = json["profileIconId"].get<int>();
+    puuid = json["puuid"].get<std::string>();
+    revisionDate = static_cast<long>(json["revisionDate"].get<int>());
+    summonerLevel = json["summonerLevel"].get<int>();
     return *this;
 }

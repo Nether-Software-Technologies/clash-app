@@ -9,10 +9,9 @@
 #include <string>
 #include <iomanip> //do we need?
 #include <curl/curl.h>
-#include <rapidjson/document.h>
-#include <rapidjson/writer.h>
-#include <rapidjson/stringbuffer.h>
-#include <rapidjson/prettywriter.h>
+#include <nlohmann/json.hpp>
+
+using JSON = nlohmann::json;
 
 //NAMESPACE
 namespace API {
@@ -32,7 +31,6 @@ namespace API {
 }
 
 //TYPEDEF
-typedef rapidjson::Document JSON;
 
 //CLASS DECLERATION
 class APIHandler {
@@ -44,14 +42,14 @@ private:
 	 * @param url URL build off of the API namespace that's passed to Riot Games' API.
      * 
      */
-	JSON* callAPI(const std::string& url) const;
+	JSON callAPI(const std::string& url) const;
 	static std::size_t WriteCallback(const char* in, std::size_t size, std::size_t num, std::string* out);
 	void errorHandler(const JSON& errorJSON) const;
 
 public:
 	APIHandler(const std::string& initRegion = "na1") : region(initRegion) {};
 	//SUMMONER-V4
-	JSON* getSummoner(const std::string& name) const;
+	JSON getSummoner(const std::string& name) const;
 	//CHAMPION-MASTERY-V4
 	void getChampionMastery(const std::string& encryptedSummonerID) const;
 	void getMasteryScore(const std::string& encryptedSummonerID) const;
@@ -66,6 +64,6 @@ public:
 	//LOL-STATUS-V3
 	void getServerStatus() const;
 	//DDRAGON-CHAMPION-JSON
-	JSON* getChampions() const;
+	JSON getChampions() const;
 };
 
