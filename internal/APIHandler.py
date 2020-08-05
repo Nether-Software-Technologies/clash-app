@@ -4,7 +4,7 @@ import json
 
 #these are all constants besides API_KEY, DO NOT CHANGE
 API_BASE_NA = "https://na1.api.riotgames.com/lol"
-API_KEY = "" #REDACTED
+API_KEY = "RGAPI-a3c53520-4aac-47cb-9dff-2a92b5f38244" #REDACTED
 API_SUMMONER_NAME = "/summoner/v4/summoners/by-name/"
 API_MASTERY_SUMMONER = "/champion-mastery/v4/champion-masteries/by-summoner/"
 API_MASTERY_SCORE = "/champion-mastery/v4/scores/by-summoner/"
