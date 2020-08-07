@@ -32,18 +32,18 @@ class Test(unittest.TestCase):
     except KeyError:
        self.assertTrue(True)
 
-  def testErrorHandler(self):
-    print('\n\n# RATE LIMIT ERROR HANDLER CHECK')
-    while (True):
-      try:
-        spam.spamTest()
-      except HTTPError as e:
-        print(e)
-        self.assertTrue(True)
-        break
+  #def testErrorHandler(self):
+    #print('\n\n# RATE LIMIT ERROR HANDLER CHECK')
+    #while (True):
+      #try:
+        #spam.spamTest()
+      #except HTTPError as e:
+        #print(e)
+        #self.assertTrue(True)
+        #break
 
   def testSummoner(self):
-    print('\n\n# RATE LIMIT ERROR HANDLER CHECK')
+    print('\n\n# SUMMONER CHECK')
     andy = Summoner("DrWegener")
     print(andy)
     self.assertEqual(andy.getSummonerName(), 'DrWegener') 
