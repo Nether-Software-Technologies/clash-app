@@ -1,7 +1,31 @@
 from internal import APIHandler as API
+import os
+import json
 
+#Globals
+cwd = os.getcwd()
+newDir = cwd + "/data/"
+
+def cache(): 
+  JSON = API.getChampions()
+  try:
+      os.mkdir(newDir)
+  except:
+    print("Error creating directory! It may already exist.")
+  with open(newDir + "ccache.dat", "w") as jsonFile:
+    json.dump(JSON, jsonFile)
+
+def checkVersion():
+  with open(newDir + "ccache.dat", "r") as jsonFile:
+    version = json.load(jsonFile)["version"]
+    if version != API.CURRENT_VERSION:
+      cache()
+      
+#Class
 class Champion:
+
   #Initalizer - given a string, name != ""
+
   def __init__(self, name = "",  ID = 0, title = "", blurb = "", tags = {}, difficulty = 0):
     if name != "":
       self.getChampionData(name)
@@ -14,19 +38,19 @@ class Champion:
       self._champDifficulty = difficulty
   
   #General
+
   def getChampionData(self, name):
-    #initalize JSON here, gets created when function ran, deleted when function leaves
-    try:
-      JSON = API.getChampions()["data"][name]
-    except KeyError:
-      print("Champion \"" + name + "\" doesn't exist!")   
-      return
-    self._champID = int(JSON["key"])
-    self._champName = JSON["name"]
-    self._champTitle = JSON["title"] 
-    self._champBlurb = JSON["blurb"]
-    self._champTags = JSON["tags"]
-    self._champDifficulty = JSON["info"]["difficulty"]
+    if not os.path.exists(newDir):
+      cache()
+    checkVersion()
+    with open(newDir + "ccache.dat", "r") as jsonFile:
+      JSON = json.load(jsonFile)["data"][name]
+      self._champID = int(JSON["key"])
+      self._champName = JSON["name"]
+      self._champTitle = JSON["title"] 
+      self._champBlurb = JSON["blurb"]
+      self._champTags = JSON["tags"]
+      self._champDifficulty = JSON["info"]["difficulty"]
   
   #Getters
   def getChampBlurb(self):

@@ -16,6 +16,7 @@ class Test(unittest.TestCase):
     self.assertEqual(nasus.getChampTags(), ["Fighter", "Tank"])
     self.assertEqual(nasus.getChampDifficulty(), 6)
     self.assertEqual(nasus.getChampName(), "Nasus")
+    print(nasus)
 
     print('\n# KLED CHECK')
     kled = Champion("Kled")
@@ -23,6 +24,7 @@ class Test(unittest.TestCase):
     self.assertEqual(kled.getChampTags(), ["Fighter", "Tank"])
     self.assertEqual(kled.getChampDifficulty(), 7)
     self.assertEqual(kled.getChampName(), "Kled")
+    print(kled)
 
     print('\n# NON-EXISTING CHAMPION CHECK')
     try:
