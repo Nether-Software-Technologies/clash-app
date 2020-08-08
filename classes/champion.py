@@ -48,7 +48,7 @@ class Champion:
     if not os.path.exists(newDir):
       cache()
     checkVersion()
-    with open(newDir + "ccache.dat", "r") as jsonFile:
+    with open(cacheFile, "r") as jsonFile:
       try:
         JSON = json.load(jsonFile)["data"][name]
       except KeyError:
