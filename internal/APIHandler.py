@@ -16,7 +16,7 @@ def _callAPI(URL):
   return JSON
 
 #Getters that declare
-def getCurrentVersion():
+def _getCurrentVersion():
   url_concat = DDRAGON_BASE + DDRAGON_VERSION
   POE = _callAPI(url_concat)
   arr = list(POE)
@@ -24,8 +24,9 @@ def getCurrentVersion():
 
 #these are all constants besides API_KEY, DO NOT CHANGE
 API_BASE_NA = "https://na1.api.riotgames.com/lol"
-API_KEY = "?api_key=RGAPI-0bfdff6e-d297-4c42-abf8-01715a271648" #REDACTED
+API_KEY = "?api_key=RGAPI-0bfdff6e-d297-4c42-abf8-01715a271648"
 API_SUMMONER_NAME = "/summoner/v4/summoners/by-name/"
+API_SUMMONER_ID = "/summoner/v4/summoners/"
 API_MASTERY_SUMMONER = "/champion-mastery/v4/champion-masteries/by-summoner/"
 API_MASTERY_SCORE = "/champion-mastery/v4/scores/by-summoner/"
 BY_CHAMPION = "/by-champion/"
@@ -35,7 +36,7 @@ CLASH_TEAM = "/clash/v1/teams/"
 CLASH_TOURNAMENT_LIST = "/clash/v1/tournaments"
 CLASH_TOURNAMENT = "/clash/v1/tournaments/by-team/"
 SERVER_UPTIME = "/status/v3/shard-data"
-CURRENT_VERSION = getCurrentVersion()
+CURRENT_VERSION = _getCurrentVersion()
 DDRAGON_CHAMPION = "/cdn/" + CURRENT_VERSION + "/data/en_US/champion.json" 
 DDRAGON_CHAMPION_REQUEST = DDRAGON_BASE + DDRAGON_CHAMPION
 
@@ -44,6 +45,11 @@ def getSummoner(name):
   url_concat = API_BASE_NA + API_SUMMONER_NAME + name + API_KEY
   POE = _callAPI(url_concat)
   return POE
+
+def getSummonerNameById(Id):
+  url_concat = API_BASE_NA + API_SUMMONER_ID + Id + API_KEY
+  POE = _callAPI(url_concat)
+  return POE["name"]
 
 def getChampionMastery(encrySummonerID):
   url_concat = API_BASE_NA + API_MASTERY_SUMMONER + encrySummonerID + API_KEY
@@ -61,7 +67,7 @@ def getChampionRotation():
   return POE
 
 def getClashBySummoner(encrySummonerID):
-  url_concat = API_BASE_NA + CLASH_SUMMONER + encryptedSummonerID + API_KEY
+  url_concat = API_BASE_NA + CLASH_SUMMONER + encrySummonerID + API_KEY
   POE = _callAPI(url_concat)
   return POE
 
@@ -70,12 +76,12 @@ def getClashByTeam(teamID):
   POE = _callAPI(url_concat)
   return POE
 
-def getTourneyByTeam(teamID):
+def getTournamentByTeam(teamID):
   url_concat = API_BASE_NA + CLASH_TOURNAMENT + teamID + API_KEY
   POE = _callAPI(url_concat)
   return POE
 
-def getTourneyList():
+def getTournamentList():
   url_concat = API_BASE_NA + CLASH_TOURNAMENT_LIST + API_KEY
   POE = _callAPI(url_concat)
   return POE 

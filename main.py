@@ -1,5 +1,6 @@
 from classes.champion import Champion
 from classes.summoner import Summoner
+from classes.team import Team
 from urllib.error import HTTPError
 import unittest
 
@@ -47,6 +48,12 @@ class Test(unittest.TestCase):
     andy = Summoner("DrWegener")
     print(andy)
     self.assertEqual(andy.getSummonerName(), 'DrWegener') 
-    
+
+  def testTeam(self):
+    print('\n\n# TEAM CHECK')
+    teamTest = Team()
+    print(teamTest)
+    self.assertEqual(teamTest.getCaptain().getSummonerName(), 'trex2764')
+  
 if __name__ == '__main__':
   unittest.main()

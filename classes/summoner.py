@@ -4,18 +4,18 @@ class Summoner:
   #Initalizer - given a string, name != ""
   def __init__(self, name = "",  ID = "", accountID = "", profileIconID = 0, PUUID = "", revisionDate = 0, level = 0):
     if name != "":
-      self.getSummonerData(name)
+      self._getSummonerData(name)
     else:
-      _summonerName = name
-      _summonerID = ID
-      _summonerAccountID = accountID
-      _summonerProfileIconID = profileIconID
-      _summonerPUUID = PUUID
-      _summonerRevisionDate = revisionDate
-      _summonerLevel = level
+      self._summonerName = name
+      self._summonerID = ID
+      self._summonerAccountID = accountID
+      self._summonerProfileIconID = profileIconID
+      self._summonerPUUID = PUUID
+      self._summonerRevisionDate = revisionDate
+      self._summonerLevel = level
   
   #General
-  def getSummonerData(self, name):
+  def _getSummonerData(self, name):
     #initalize JSON here, gets created when function ran, deleted when function leaves; API covers failed attempt
     JSON = API.getSummoner(name)
     self._summonerName = JSON["name"]
