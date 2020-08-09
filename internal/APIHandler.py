@@ -24,7 +24,7 @@ def getCurrentVersion():
 
 #these are all constants besides API_KEY, DO NOT CHANGE
 API_BASE_NA = "https://na1.api.riotgames.com/lol"
-API_KEY = "?api_key=RGAPI-934e9c48-0dbb-4d97-9354-b5a2f01f4963" #REDACTED
+API_KEY = "?api_key=RGAPI-0bfdff6e-d297-4c42-abf8-01715a271648" #REDACTED
 API_SUMMONER_NAME = "/summoner/v4/summoners/by-name/"
 API_MASTERY_SUMMONER = "/champion-mastery/v4/champion-masteries/by-summoner/"
 API_MASTERY_SCORE = "/champion-mastery/v4/scores/by-summoner/"

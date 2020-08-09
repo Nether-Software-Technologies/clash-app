@@ -58,3 +58,11 @@ target/
 
 # Cache
 data/
+
+#vscode
+/.vscode
+
+#OSX
+*.dSYM
+*.app
+*.DS_Store
