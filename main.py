@@ -62,8 +62,12 @@ class Test(unittest.TestCase):
     self.assertEqual(teamTest.getName(), 'Hong Kong Cleaver')
     self.assertEqual(teamTest.getTier(), 4)
     self.assertEqual(teamTest.getIconId(), 23)
-    self.assertEqual(teamTest.getTournamentId(), 2441)
-
+    self.assertEqual(teamTest.getTournamentId(), 2461)
+    teamPlayers = teamTest.getPlayerData()
+    for x in range(len(teamPlayers)):
+      print("Summoners in team: " + API.getSummonerNameById(teamPlayers[x].get("summonerId")) + 
+            ", position: " + teamPlayers[x].get("position"))
+    
   def testTournament(self):
     print('\n\n# TOURNAMENT NAME CHECK')
     print('Tournament: ' + API.getTournamentName().upper() + ' CUP')
