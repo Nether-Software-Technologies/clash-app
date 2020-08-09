@@ -81,6 +81,11 @@ def getTournamentByTeam(teamID):
   POE = _callAPI(url_concat)
   return POE
 
+def getTournamentName():
+  url_concat = API_BASE_NA + CLASH_TOURNAMENT_LIST + API_KEY
+  POE = _callAPI(url_concat)
+  return POE[0]["nameKey"]
+
 def getTournamentList():
   url_concat = API_BASE_NA + CLASH_TOURNAMENT_LIST + API_KEY
   POE = _callAPI(url_concat)
