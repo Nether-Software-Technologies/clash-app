@@ -24,7 +24,7 @@ def _getCurrentVersion():
 
 #these are all constants besides API_KEY, DO NOT CHANGE
 API_BASE_NA = "https://na1.api.riotgames.com/lol"
-API_KEY = "?api_key=RGAPI-0bfdff6e-d297-4c42-abf8-01715a271648"
+API_KEY = "?api_key=ADD_YOUR_OWN_LOL"
 API_SUMMONER_NAME = "/summoner/v4/summoners/by-name/"
 API_SUMMONER_ID = "/summoner/v4/summoners/"
 API_MASTERY_SUMMONER = "/champion-mastery/v4/champion-masteries/by-summoner/"

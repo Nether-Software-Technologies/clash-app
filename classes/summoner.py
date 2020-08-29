@@ -2,28 +2,28 @@ from internal import APIHandler as API
 
 class Summoner:
   #Initalizer - given a string, name != ""
-  def __init__(self, name = "",  ID = "", accountID = "", profileIconID = 0, PUUID = "", revisionDate = 0, level = 0):
-    if name != "":
-      self._getSummonerData(name)
-    else:
-      self._summonerName = name
-      self._summonerID = ID
-      self._summonerAccountID = accountID
-      self._summonerProfileIconID = profileIconID
-      self._summonerPUUID = PUUID
-      self._summonerRevisionDate = revisionDate
-      self._summonerLevel = level
+  def __init__(self, name = None,  ID = None, accountID = None, profileIconID = None, PUUID = None, revisionDate = None, level = None):
+    self._summonerName = name
+    self._summonerID = ID
+    self._summonerAccountID = accountID
+    self._summonerProfileIconID = profileIconID
+    self._summonerPUUID = PUUID
+    self._summonerRevisionDate = revisionDate
+    self._summonerLevel = level
   
   #General
-  def _getSummonerData(self, name):
+
+  @classmethod
+  def fromName(cls, name):
     #initalize JSON here, gets created when function ran, deleted when function leaves; API covers failed attempt
     JSON = API.getSummoner(name)
-    self._summonerName = JSON["name"]
-    self._summonerID = JSON["id"]
-    self._summonerAccountID = JSON["accountId"]
-    self._summonerPUUID = JSON["puuid"]
-    self._summonerRevisionDate = JSON["revisionDate"]
-    self._summonerLevel = JSON["summonerLevel"]
+    sName = JSON["name"]
+    sID = JSON["id"]
+    sAccountID = JSON["accountId"]
+    sPUUID = JSON["puuid"]
+    sRevisionDate = JSON["revisionDate"]
+    sLevel = JSON["summonerLevel"]
+    return cls(sName, sID, sAccountID, 69, sPUUID, sRevisionDate, sLevel)
   
   #Getters
   def getSummonerName(self):

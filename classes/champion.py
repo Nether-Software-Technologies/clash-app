@@ -30,21 +30,20 @@ def checkVersion():
 #Class
 class Champion:
 
-  #Initalizer - given a string, name != ""
+  #Initalizer
 
-  def __init__(self, name = "",  ID = 0, title = "", blurb = "", tags = {}, difficulty = 0):
-    if name != "":
-      self.getChampionData(name)
-    else:
-      self._champID = ID
-      self._champName = name
-      self._champTitle = title
-      self._champBlurb = blurb
-      self._champTags = tags
-      self._champDifficulty = difficulty
+  def __init__(self, name = None,  ID = None, title = None, blurb = None, tags = None, difficulty = None):
+    self._champID = ID
+    self._champName = name
+    self._champTitle = title
+    self._champBlurb = blurb
+    self._champTags = tags
+    self._champDifficulty = difficulty
   
   #General
-  def getChampionData(self, name):
+
+  @classmethod
+  def fromName(cls, name):
     if not os.path.exists(newDir):
       cache()
     checkVersion()
@@ -54,12 +53,14 @@ class Champion:
       except KeyError:
         print("ERROR: Champion doesn't exist!")
         return
-    self._champID = int(JSON["key"])
-    self._champName = JSON["name"]
-    self._champTitle = JSON["title"] 
-    self._champBlurb = JSON["blurb"]
-    self._champTags = JSON["tags"]
-    self._champDifficulty = JSON["info"]["difficulty"]
+    champID = int(JSON["key"])
+    champName = JSON["name"]
+    champTitle = JSON["title"] 
+    champBlurb = JSON["blurb"]
+    champTags = JSON["tags"]
+    champDifficulty = JSON["info"]["difficulty"]
+    return cls(champName, champID, champTitle, champBlurb, champTags, champDifficulty)
+
   
   #Getters
   def getChampBlurb(self):

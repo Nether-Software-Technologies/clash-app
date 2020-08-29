@@ -6,22 +6,17 @@ class PlayerData:
 
 class Team:
   def __init__(self, teamId = 0, tournamentId = 0, name = "", iconId = 0, tier = 0, captain = Summoner(), abbreviation = "", indivData = {}):
-    if not teamId:
-      print("Enter summoner name.")
-      summonerName = input()
-      summ = Summoner(summonerName)
-      self._getTeamData(summ.getSummonerID())
-    else:
-      self._teamId = teamId
-      self._tournamentId = tournamentId
-      self._name = name
-      self._iconId = iconId
-      self._tier = tier
-      self._captain = captain
-      self._abbreviation = abbreviation
-      self._memberData = [indivData]
+    self._teamId = teamId
+    self._tournamentId = tournamentId
+    self._name = name
+    self._iconId = iconId
+    self._tier = tier
+    self._captain = captain
+    self._abbreviation = abbreviation
+    self._memberData = [indivData]
 
-  def _getTeamData(self, ID):
+  @classmethod
+  def fromID(cls, ID):
     #initalize JSON here, gets created when function ran, deleted when function leaves; API covers failed attempt
     try:
       JSON = API.getClashBySummoner(ID)[0]
@@ -31,13 +26,21 @@ class Team:
     tId = JSON["teamId"]
     self._teamId = tId
     JSON = API.getClashByTeam(tId)
-    self._tournamentId = JSON["tournamentId"]
-    self._name = JSON["name"]
-    self._iconId = JSON["iconId"]
-    self._tier = JSON["tier"]
-    self._captain = Summoner(API.getSummonerNameById(JSON["captain"]))
-    self._abbreviation = JSON["abbreviation"]
-    self._memberData = JSON["players"]
+    tournamentId = JSON["tournamentId"]
+    name = JSON["name"]
+    iconId = JSON["iconId"]
+    tier = JSON["tier"]
+    captain = Summoner(API.getSummonerNameById(JSON["captain"]))
+    abbreviation = JSON["abbreviation"]
+    memberData = JSON["players"]
+    return cls(tId, tournamentId, name, iconId, tier, captain, abbreviation, memberData)
+ 
+  @classmethod
+  def fromName(cls, name):
+    summ = Summoner(name)
+    ID = summ.getSummonerID()
+    return fromID(cls, ID)
+      
 
   #Getters
   def getTeamId(self):
